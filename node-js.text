@@ -1,0 +1,88 @@
+1 - O que é um package.json?
+
+O package.json é um descritor de módulos, ele possui informações do seu projeto node.js dentro de um objeto escrito no formato JSON. 
+EXEMPLO:
+
+{
+  "name": "meu-projeto",
+  "version": "1.0.0",
+  "description": "Projeto de estudos Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "mysql2": "^3.0.0"
+  }
+}
+
+OBS: esses valores escritos no objeto JSON acima são ilustrativas.
+
+2 - O que cada propriedade significa?
+
+.Propriedade/Função.
+
+# name: Nome do pacote ou projeto.
+# version: Versão atual do projeto.
+# description: Descrição do projeto.
+# main: Ponto de entrada declarado para outro pacote, especialmente quando ele é importado por outros objetos
+# scripts: Define comando que podem ser executados pelo npm.
+# dependencies: Lista as bibliotecas necessárias para a aplicação funcionar.
+
+EXEMPLO:
+"scripts":{
+    "start":"node index.js"
+}
+
+Ele permite executar o arquivo index.js com o comando: npm start
+Ou seja, em vez de digitar node index.js, você pode utilizar um comando definido no própio package.json.
+
+EXEMPLO 2:
+"dependencies": {
+    "mysql2": "^3.0.0"
+}
+
+Isso declara que o projeto depende da biblioteca mysql2. O npm utiliza essas informações para instalar e gerênciar as dependências.
+Atenção: declarar uma dependência no package.json não significa, por si só, que a biblioteca já esteja instalada. A instalação é gerenciada pelo npm, geralmente
+com npm install.
+
+3 - Como ele se relaciona com os módulos do Node.js?
+
+EXEMPLO: você tem essa estrutura.
+
+meu-projeto/
+
+<>index.js / Arquivo principal
+
+<>db.js / Conexão com o banco
+
+<>package.json / Metadados e configurações
+
+#node_modules/ Bibliotecas instaladas
+
+.No arquivo index.js você poderia escrever:
+
+const mysql = require('mysql2/promise');
+
+Nesse caso, o Node.js procura e carrega o módulo mysql2/promise, disponibilizado pelo pacote mysql2.
+O package.json ajuda a descrever o projeto e declarar suas dependências, mas não é ele que contém o código do módulo nem que executa a importação. Quem realiza a
+resolução e o carregamento é o sistema de módulos do Node.js.
+
+Também é importante distinguir:
+- Módulo: uma unidade de código que pode ser carregada ou reutilizada.
+- Pacote: uma unidade distribuível, normalmente com um package.json, que pode conter um ou vários módulos.
+- package.json: o arquivo que descreve o pacote e suas configurações.
+
+4 - Como o package.json é criado?
+
+Quando você executa 'npm init -y', o npm cria um package.json com valores padrão para o projeto atual. Quando instalar uma biblioteca nova, o npm registra essa
+em dependencies e instala os arquivos necessários.
+
+Há ainda outros arquivos importantes:
+- package-lock.json: registra a árvore de dependências e as versões resolvidas para ajudar a reproduzir a instalação.
+- node_modules/: diretório onde as dependências instaladas ficam disponíveis.
+
+.CommonJS (CJS): utiliza require() para importar módulos e module.exports ou exports para exportar valores.
+.ES Modules (ESM): utiliza import para importar e export para exportar valores.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
